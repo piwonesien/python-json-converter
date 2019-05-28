@@ -39,7 +39,9 @@ class Converter:
         # Specific JSON stuff:
         propertyset = PropertySet(json_dict["name"])
         for item in json_dict["properties"]:
-            propertyset.properties.append(Property(item["name"] if "name" in item else None, item["value"] if "value" in item else None))
+            propertyset.properties.append(
+                Property(item["name"] if "name" in item else None, item["value"] if "value" in item else None)
+            )
 
         return propertyset
 
@@ -48,10 +50,10 @@ class Converter:
         # Split string into a list with each entry as a first level KV pair:
         # -> ['"key": value', ...]
         # A nested value is also one value at this point
-        json_list = re.findall(r"[ ]*\"[A-Za-z0-9]+\":[ ]*(?:\[[^\]]+])|(?:(?:[^{\[,\]}]+))", json_string)
-        # Understandig regex:
+        json_list = re.findall(r"[ ]*\"[A-Za-z0-9]+\":[ ]*(?:\[[^\]]+])|(?:[^{\[,\]}]+)", json_string)
+        # Understanding regex:
         # \"[A-Za-z0-9]+\": -> search for key
-        # .{0,1} -> allow whitepace or other things
+        # [ ]* -> allow whitespaces
         # (?:\[[^\]]+])|(?:(?:[^{\[,\]}]+)) -> OR check:
         # First part: search for lists
         # Second part: search for commas in non list entries
@@ -72,7 +74,8 @@ class Converter:
             return string.replace("\"", "")
         # Datatype is list
         if string.startswith("["):
-            # Here we assume that in a list is always a list of objects, for other list types use a more complex regex (e.g. regex above)
+            # Here we assume that in a list is always a list of objects,
+            # for other list types use a more complex regex (e.g. regex above)
             items = re.findall("{[^}]+}", string)
             item_list = []
             for item in items:
@@ -85,17 +88,17 @@ class Converter:
             return float(string)
 
     @staticmethod
-    def is_float(input: str):
+    def is_float(input_string: str):
         try:
-            num = float(input)
+            float(input_string)
         except ValueError:
             return False
         return True
 
     @staticmethod
-    def is_int(input: str):
+    def is_int(input_string: str):
         try:
-            num = int(input)
+            int(input_string)
         except ValueError:
             return False
         return True

@@ -4,6 +4,7 @@ from BackendTask import PropertySet
 from BackendTask import Property
 from BackendTask import Converter
 
+
 class Test_test_BackendTask(unittest.TestCase):
 
     def test_propertyset_create(self):
@@ -56,6 +57,25 @@ class Test_test_BackendTask(unittest.TestCase):
         self.assertEquals(a_property_set.properties[0].name, 'Test')
         self.assertEquals(a_property_set.properties[0].value, 100)
 
+    def test_converter_float(self):
+        self.assertEquals(Converter.is_float("asdf"), False)
+        self.assertEquals(Converter.is_float("1"), True)
+        self.assertEquals(Converter.is_float("123"), True)
+        self.assertEquals(Converter.is_float("-1"), True)
+        self.assertEquals(Converter.is_float("12ew"), False)
+        self.assertEquals(Converter.is_float("1.0"), True)
+        self.assertEquals(Converter.is_float("0.9"), True)
+        self.assertEquals(Converter.is_float("-0.5"), True)
+
+    def test_converter_int(self):
+        self.assertEquals(Converter.is_int("asdf"), False)
+        self.assertEquals(Converter.is_int("1"), True)
+        self.assertEquals(Converter.is_int("123"), True)
+        self.assertEquals(Converter.is_int("-1"), True)
+        self.assertEquals(Converter.is_int("12ew"), False)
+        self.assertEquals(Converter.is_int("1.0"), False)
+        self.assertEquals(Converter.is_int("0.9"), False)
+        self.assertEquals(Converter.is_int("-0.5"), False)
 
 
 if __name__ == '__main__':
