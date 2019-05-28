@@ -39,7 +39,6 @@ class Converter:
         # Specific JSON stuff:
         propertyset = PropertySet(json_dict["name"])
         for item in json_dict["properties"]:
-            print(item)
             propertyset.properties.append(Property(item["name"] if "name" in item else None, item["value"] if "value" in item else None))
 
         return propertyset
@@ -56,9 +55,6 @@ class Converter:
         # (?:\[[^\]]+])|(?:(?:[^{\[,\]}]+)) -> OR check:
         # First part: search for lists
         # Second part: search for commas in non list entries
-        print('Begin')
-        print(json_list)
-        print('End')
 
         json_dict = {}
         for element in json_list:
